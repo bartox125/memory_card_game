@@ -94,7 +94,14 @@ async function turn(object,card_id,i){
 
 const end_of_the_game=(status)=>{   
     clearInterval(interval)
-    showDialog(status)
+    dialog.style.display="flex"
+    const text=document.getElementById("message")
+    if(status){
+        text.innerText="YOU WON!"
+    }
+    else{
+        text.innerText="YOU LOST!"
+    }
 }
 
 function timer(seconds){    
@@ -120,22 +127,10 @@ const reset=()=>{
     footer.style.display="none"
     container.style.display="none"
     dialog.style.display="none"
-    dialogMenu.classList.remove("win")
-    dialogMenu.classList.remove("lost")
     cards=[]
     guessed=[]
     current_id=[]
     current_pictures=[]
     board.innerHTML=''
     document.getElementById("bar").style.width="100%"
-}
-const showDialog=(state)=>{
-    dialog.style.display="flex"
-    const text=document.getElementById("message")
-    if(state){
-        text.innerText="YOU WON!"
-    }
-    else{
-        text.innerText="YOU LOST!"
-    }
 }
