@@ -4,6 +4,7 @@ const background=document.querySelector(".background")
 const footer=document.querySelector("footer")
 const container=document.getElementById("container")
 const windowMenu=document.getElementById("window")
+const dialog=document.getElementById("dialog")
 let cards=[]
 let guessed=[]
 let current_id=[]
@@ -11,6 +12,9 @@ let current_pictures=[]
 let interval=null
 
 document.getElementById("back").addEventListener("click", ()=>{
+    reset()
+})
+document.getElementById("resButton").addEventListener("click",()=>{
     reset()
 })
 
@@ -89,12 +93,8 @@ async function turn(object,card_id,i){
 }
 
 const end_of_the_game=(status)=>{   
-    if(status==true){
-        alert("Gratulacje! Wygrałeś")
-    }
-    else{
-        alert("Przegrałeś")
-    }
+    clearInterval(interval)
+    showDialog(status)
 }
 
 function timer(seconds){    
@@ -114,16 +114,28 @@ function timer(seconds){
 }
 
 const reset=()=>{
-    clearInterval(interval)
     menu.style.display="flex"
     board.style.display="none"
     background.style.height="100vh"
     footer.style.display="none"
     container.style.display="none"
+    dialog.style.display="none"
+    dialogMenu.classList.remove("win")
+    dialogMenu.classList.remove("lost")
     cards=[]
     guessed=[]
     current_id=[]
     current_pictures=[]
     board.innerHTML=''
-    document.getElementById("bar").style.width=100%
+    document.getElementById("bar").style.width="100%"
+}
+const showDialog=(state)=>{
+    dialog.style.display="flex"
+    const text=document.getElementById("message")
+    if(state){
+        text.innerText="YOU WON!"
+    }
+    else{
+        text.innerText="YOU LOST!"
+    }
 }
