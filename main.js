@@ -26,12 +26,18 @@ const start=(time)=>{
     container.style.display="block"
     shuffle()
     for(let i=0;i<cards.length;i++){
-        let card=document.createElement("img")
+        let container = document.createElement("div")
+        container.classList.add("card-container")
+
+        let card = document.createElement("img")
         card.classList.add("card")
-        card.src="src/0.jpg"
-        card.id=i
-        card.onclick=()=>turn(card,cards[i],i)
-        board.appendChild(card)
+        card.src = "src/0.jpg"
+        card.id = i
+        card.onclick = () => turn(card, cards[i], i)
+
+        container.appendChild(card)
+        board.appendChild(container)
+
     }
     timer(time)
 }
@@ -68,7 +74,10 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function turn(object,card_id,i){
     if(current_id.length<2 && current_id[0]!=i && guessed.indexOf(card_id)==-1){
-        object.src="src/"+card_id+".jpg"
+        object.classList.add("flip")
+        setTimeout(() => {
+            object.src="src/"+card_id+".jpg"
+        }, 200);    
         current_id.push(i)
         current_pictures.push(card_id)
     }
@@ -79,8 +88,16 @@ async function turn(object,card_id,i){
         }
         else{
             await delay(500)
-            document.getElementById(current_id[0]).src='src/0.jpg'
-            document.getElementById(current_id[1]).src='src/0.jpg'
+            const first = document.getElementById(current_id[0])
+            const second = document.getElementById(current_id[1])
+
+            first.classList.remove("flip")
+            second.classList.remove("flip")
+
+            setTimeout(() => {
+                first.src = "src/0.jpg"
+                second.src = "src/0.jpg"
+            }, 250)
         }
         current_id=[]
         current_pictures=[]    

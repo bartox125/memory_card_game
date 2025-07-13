@@ -42,11 +42,19 @@ body {
   padding: 1.5em;
   border-radius: 30px;
 }
+.card-container {
+  perspective: 1000px;
+  display: inline-block;
+  margin: 5px;
+}
 .card {
   width: 100px;
   height: 100px;
-  perspective: 1000px;
-  cursor: pointer;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.card.flip {
+  transform: rotateY(180deg);
 }
 .back {
   transform: rotateY(180deg);
@@ -149,3 +157,4 @@ footer a {
 #message {
   font-size: x-large;
 }
+
